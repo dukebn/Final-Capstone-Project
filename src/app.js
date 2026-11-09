@@ -6,6 +6,9 @@ const moviesRouter = require("./movies/movies.router");
 const theatersRouter = require("./theaters/theaters.router");
 const reviewsRouter = require("./reviews/reviews.router");
 
+// Serve the frontend HTML, CSS, and JavaScript
+app.use(express.static(path.join(__dirname, "../starter-movie-front-end-main")));
+
 // TODO: Add your code here
 const errorHandler = require("./errors/errorHandler");
 const notFound = require("./errors/notFound");
