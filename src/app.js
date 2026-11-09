@@ -7,6 +7,8 @@ const moviesRouter = require("./movies/movies.router");
 const theatersRouter = require("./theaters/theaters.router");
 const reviewsRouter = require("./reviews/reviews.router");
 
+app.use(require("cors")());
+
 // Serve the frontend HTML, CSS, and JavaScript
 app.use(express.static(path.join(__dirname, "../starter-movie-front-end-main/public")));
 
