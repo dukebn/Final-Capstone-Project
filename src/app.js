@@ -1,6 +1,7 @@
 if (process.env.USER) require("dotenv").config();
 
 const express = require("express");
+const path = require("path");
 const app = express();
 const moviesRouter = require("./movies/movies.router");
 const theatersRouter = require("./theaters/theaters.router");
