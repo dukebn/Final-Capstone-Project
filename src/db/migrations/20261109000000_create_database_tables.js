@@ -8,45 +8,47 @@ exports.up = function (knex) {
       table.increments("movie_id").primary();
       table.string("title");
       table.integer("runtime_in_minutes");
-      table.enum("rating", ["G", "PG", "PG-13", "R", "NC-17", "NR"]);
+      table.enum("rating", ["G", "PG", "PG-13", "R", "NC-17", "NR"]).notNullable;
       table.text("description");
       table.string("image_url");
       table.timestamps(true, true);
     })
     .createTable("critics", (table) => {
       table.increments("critic_id").primary();
-      table.string("preferred_name");
-      table.string("surname");
+      table.string("preferred_name").notNullable;
+      table.string("surname").notNullable;
       table.string("organization_name");
       table.timestamps(true, true);
     })
     .createTable("theaters", (table) => {
       table.increments("theater_id").primary();
-      table.string("name");
-      table.string("address_line_1");
+      table.string("name").notNullable;
+      table.string("address_line_1").notNullable;
       table.string("address_line_2");
-      table.string("city");
-      table.string("state");
-      table.string("zip");
+      table.string("city").notNullable;
+      table.string("state").notNullable;
+      table.string("zip").notNullable;
       table.timestamps(true, true);
     })
     .createTable("reviews", (table) => {
       table.increments("review_id").primary();
-      table.text("content");
-      table.integer("score");
+      table.text("content").notNullable;
+      table.integer("score").notNullable;
       table.timestamps(true, true);
 
       table.integer("critic_id").unsigned().notNullable();
       table
         .foreign("critic_id")
         .references("critic_id")
-        .inTable("critics");
+        .inTable("critics")
+        .onDelete("CASCADE");
 
       table.integer("movie_id").unsigned().notNullable();
       table
         .foreign("movie_id")
         .references("movie_id")
-        .inTable("movies");
+        .inTable("movies")
+        .onDelete("CASCADE");
     })
     .createTable("movies_theaters", (table) => {
       table.boolean("is_showing").defaultTo(false);
@@ -56,13 +58,15 @@ exports.up = function (knex) {
       table
         .foreign("movie_id")
         .references("movie_id")
-        .inTable("movies");
+        .inTable("movies")
+        .onDelete("CASCADE");
 
       table.integer("theater_id").unsigned().notNullable();
       table
         .foreign("theater_id")
         .references("theater_id")
-        .inTable("theaters");
+        .inTable("theaters")
+        .onDelete("CASCADE");
 
       table.primary(["movie_id", "theater_id"]);
     });
